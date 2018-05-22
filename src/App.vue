@@ -1,23 +1,115 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <div class="container">
+      <form @submit.prevent="addBookmark">
+        <input type="text" placeholder="Site name" v-model="bookmarks.name" name="name">
+        <input type="text" placeholder="URL" v-model="bookmarks.url" name="url">
+        <input type="text" placeholder="Category" v-model="bookmarks.category" name="category">
+        <button @submit.prevent="addBookmark">Add bookmark</button>
+      </form>
+      <ul>
+        <li v-for="(item, index) in bookmarks" :key='index'>{{item.name}} - {{item.category}}
+          <div class="delete-icon" @click="remove(index)"></div>
+        </li>
+      </ul>
+    </div>
+    <!-- <router-view/> -->
   </div>
 </template>
 
 <script>
-export default {
-  name: 'App'
-}
+  export default {
+    name: "App",
+    data() {
+      return {
+        bookmarks: [{
+            name: 'Codepen',
+            url: 'https://codepen.io/',
+            category: 'Front-end',
+          },
+          {
+            name: 'Dribbble',
+            url: 'https://dribbble.com/',
+            category: 'Web Design',
+          },
+          {
+            name: 'Udemy',
+            url: 'https://www.udemy.com/',
+            category: 'Education',
+          },
+        ],
+      }
+    },
+    methods: {
+      addBookmark() {
+        // pushing the new bookmark to the array
+        const bookmark = {
+          name: this.name,
+          url: this.url,
+          category: this.category,
+        };
+        this.bookmarks.push(bookmark);
+        //clearing input fields
+      },
+      remove(id) {
+        this.bookmarks.splice(id, 1);
+      }
+    }
+  };
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss">
+.container {
+   background: #fff;
+	font-family: Arial;
+	max-width:600px;
+	margin: 0 auto;
+	margin-top:30px;
+	box-shadow: 0px 2px 15px rgba(0,0,0,0.1);
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    & li {
+      padding: 20px;
+      font-size: 1.3em;
+      background-color: #E0EDF4;
+      margin-bottom: 2px;
+      color: #3E5252;
+    }
+  }
+  p {
+    text-align:center;
+    padding: 30px 0;
+    color: #666;
+	  margin:0;
+  }
+  input, button {
+    width:calc(100% - 22px);
+    padding: 10px;
+    font-size: 1.3em;
+  }
+  button {
+    width:100%;
+  }
+
+.delete-icon {
+	width:25px;
+	height:25px;
+	border-radius: 100%;
+	background: #323333;
+	float:right;
+  	cursor:pointer;
+	position: relative;
+	&:after {
+		content:'';
+		position: absolute;
+		width:50%;
+		height: 16%;
+		top:42%;
+		left:25%;
+		background-color: #E0EDF4;
+	}
 }
 </style>
