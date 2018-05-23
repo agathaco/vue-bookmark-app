@@ -1,0 +1,83 @@
+<template>
+  <div>
+    <form @submit.prevent="validateForm">
+      <input type="text" placeholder="Site name" v-model.lazy="bookmark.name" name="name" v-validate="'required'">
+      <div class="error" v-if="errors.has('name')">{{errors.first('name')}}</div>
+      <input type="text" placeholder="URL" v-model.lazy="bookmark.url" name="url" v-validate="'required|url'">
+      <div class="error" v-if="errors.has('url')">{{errors.first('url')}}</div>
+      <input type="text" placeholder="Category" v-model="bookmark.category" name="category">
+      <button type="submit">Add bookmark</button>
+    </form>
+  </div>
+</template>
+
+<script>
+  import axios from 'axios';
+  export default {
+    name: 'BookmarksLst',
+    props: ['bookmarks'],
+    data() {
+      return {
+        bookmark: {
+          name: '',
+          url: '',
+          category: '',
+        },
+      }
+    },
+    methods: {
+      addBookmark() {
+        // creating a new bookmark with the form's data
+        const newBookmark = {
+          name: this.bookmark.name,
+          url: this.bookmark.url,
+          category: this.bookmark.category,
+        };
+        // pushing the new bookmark to the bookmarks array
+        this.bookmarks.push(newBookmark);
+        // sending to firebase
+        axios.post('bookmarks.json', newBookmark)
+          .catch(error => console.log(error))
+        //clearing out input fields
+        this.bookmark = {
+          name: '',
+          url: '',
+          category: '',
+        };
+      },
+      // form validations
+      validateForm() {
+        this.$validator.validateAll().then(result => {
+          if (result) {
+            this.addBookmark()
+          }
+        });
+      },
+    }
+  }
+</script>
+
+<style lang="scss" scoped>
+  input,
+  button {
+    width: calc(100% - 22px);
+    padding: 10px;
+    font-size: 1.3em;
+  }
+  
+  button {
+    width: 100%;
+  }
+    
+  .form-group--error input,
+  .form-group--error textarea,
+  .form-group--error input:focus,
+  .form-group--error input:hover {
+    border-color: #f79483;
+  }
+  
+  .form-group--error .error {
+    display: block;
+    color: #f57f6c;
+  }
+</style>
