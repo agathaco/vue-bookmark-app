@@ -1,31 +1,26 @@
 <template>
   <div id="app">
     <div class="container">
-      <form @submit.prevent="addBookmark">
-        <div class="form-group" :class="{ 'form-group--error': $v.bookmarks.name.$error }">
-        <input type="text" placeholder="Site name" v-model.lazy="$v.bookmarks.name.$model" name="name">
-        <p class="error" v-if="$v.bookmarks.name.$error">Please enter a name</p></div>
-        <input type="text" placeholder="URL" v-model.lazy="bookmarks.url" name="url">
-        <p v-if="$v.bookmarks.url.$error">Please enter a valid URL.</p>
-        <input type="text" placeholder="Category" v-model="bookmarks.category" name="category">
-        <button @submit.prevent="addBookmark" @click="validateForm">Add bookmark</button>
+      <form @submit.prevent="validateForm">
+
+          <input type="text" placeholder="Site name" v-model.lazy="bookmark.name" name="name" v-validate="'required'">
+          <div class="error" v-if="errors.has('name')">{{errors.first('name')}}</div>
+          <input type="text" placeholder="URL" v-model.lazy="bookmark.url" name="url" v-validate="'required|url'">
+          <div class="error" v-if="errors.has('url')">{{errors.first('url')}}</div>
+          <input type="text" placeholder="Category" v-model="bookmark.category" name="category">
+          <button type="submit">Add bookmark</button>
       </form>
       <ul>
         <li v-for="(item, index) in bookmarks" :key='index'><a :href="item.url">{{item.name}}</a> <span class="category">{{item.category}}</span>
-          <div class="delete-icon" @click="remove(index)"></div>
+          <div class="delete-icon" @click="removeBookmark(index)"></div>
         </li>
       </ul>
     </div>
-    <!-- <router-view/> -->
   </div>
 </template>
 
 <script>
-  // imports needed validators from vuelidate
-  import {
-    required,
-    url
-  } from 'vuelidate/lib/validators';
+
   export default {
     name: "App",
     data() {
@@ -46,47 +41,45 @@
         //     category: 'Education',
         //   },
         // ],
-        bookmarks: {
+        bookmark: {
           name: '',
           url: '',
           category: '',
-        }
+        },
+        bookmarks: []
       }
     },
     methods: {
       addBookmark() {
-        // pushing the new bookmark to the array
-        const bookmark = {
-          name: this.name,
-          url: this.url,
-          category: this.category,
+        // creating a new bookmark with the form's data
+        const newBookmark = {
+          name: this.bookmark.name,
+          url: this.bookmark.url,
+          category: this.bookmark.category,
         };
-        // this.bookmarks.push(bookmark);
-        //clearing input fields
+        // pushing the new bookmark to the bookmarks array
+        this.bookmarks.push(newBookmark);
+        //clearing out input fields
+        this.bookmark = {
+          name: null,
+          url: null,
+          category: null,
+        };
       },
-      remove(id) {
-        this.bookmarks.splice(id, 1);
+      removeBookmark(index) {
+        this.bookmarks.splice(index, 1);
       },
       validateForm() {
-        this.$v.$touch();
-      }
-    },
-    computed: {
-      formIsValid() {
-        return this.name !== '' && this.url !== '';
-      },
-    },
-    validations: {
-      bookmarks: {
-        name: {
-          required,
-        },
-        url: {
-          required,
-          url
+      this.$validator.validateAll().then(result => {
+        if (result) {
+          this.addBookmark()
         }
-      }
+      });
     }
+  },
+  //registering the validators for each input field
+
+
   }
 </script>
 
@@ -157,11 +150,16 @@
       background-color: #E0EDF4;
     }
   }
-.form-group--error input, .form-group--error textarea, .form-group--error input:focus, .form-group--error input:hover {
+  
+  .form-group--error input,
+  .form-group--error textarea,
+  .form-group--error input:focus,
+  .form-group--error input:hover {
     border-color: #f79483;
   }
+  
   .form-group--error .error {
     display: block;
     color: #f57f6c;
-}
+  }
 </style>

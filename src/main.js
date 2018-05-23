@@ -1,8 +1,8 @@
 import Vue from 'vue';
-import Vuelidate from 'vuelidate';
+import VeeValidate from 'vee-validate';
 import App from './App';
 
-Vue.use(Vuelidate);
+Vue.use(VeeValidate);
 
 Vue.config.productionTip = false
 
