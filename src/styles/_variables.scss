@@ -1,6 +1,8 @@
 $red: #fa5560;
 $background: #FAFAFA;
 $text-color: #272b2e;
+$medium-grey: #6B808C;
+$light-grey: #BDC6CC;
 @mixin btn-circle ($font-size, $color, $bgcolor) {
   color: $color;
   font-weight: 700;
@@ -34,3 +36,48 @@ $text-color: #272b2e;
     box-shadow: $top $left $blur $color;
   }
 }
+
+@mixin button-builder($bg, $color) {
+    background: $bg;
+    color: $color;
+    font-size: 1.4rem;
+    line-height: 1;
+    padding: 1em;
+    border: 1px solid transparent;
+    border-radius: 1px;
+    box-shadow: none;
+    text-shadow: none;
+    background-image: none;
+    cursor: pointer;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    display:inline-block;
+    text-align: center;
+    &:hover {
+      background:darken($bg,15%);
+      transition: all 0.3s ease;
+      color:$color;
+    }
+    &:active {
+      background:darken($bg,25%);
+      color:$color;
+    } 
+    &:not(.disabled):hover {
+      background:darken($bg,8%);
+      transition: all 0.3s ease;
+      background-image: none;
+      color:$color;
+    }
+    &:focus {
+      border: none;
+      outline: 0;
+      color:$color;
+    }
+    &:visited {
+      color:$color;
+    }
+    a {
+      color: $color !important;
+      text-decoration: none !important;
+    }
+  }

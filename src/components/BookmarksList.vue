@@ -3,14 +3,16 @@
     <ul>
       <li v-for="(item, index) in bookmarks" :key='index'><a :href="item.url">{{item.name}}</a> <span class="category" v-if="item.category !== ''">{{item.category}}</span>
         <div class="spacer"></div>
+        {{item}}
         <div class="actions">
-          <span @click="editBookmark()">Edit</span>
-          <span @click="removeBookmark(index)">Delete</span>
+          <span @click="editBookmark()"><i class="material-icons">edit</i></span>
+          <span @click="removeBookmark(item, index)"><i class="material-icons">delete</i></span>
+          
         </div>
       </li>
     </ul>
     <add-bookmark :bookmarks="bookmarks" class="modal" v-if="isShowing">
-      <h1 slot="title">Edit the bookmark</h1>
+      <h1 slot="title">Edit a bookmark</h1>
       <button slot="button" type="submit">Save bookmark</button>
     </add-bookmark>
   </div>
@@ -33,9 +35,7 @@
     methods: {
       removeBookmark(result, index) {
         // need to remove from firebase too
-        axios.delete('bookmarks.json', {
-            params: {}
-          })
+        axios.delete('bookmarks/' + result.id + '.json')
           .then(response => {
             this.bookmarks.splice(index, 1);
           })
@@ -49,7 +49,7 @@
 </script>
 
 <style lang="scss" scoped>
-@import './../styles/_variables.scss';
+  @import './../styles/_variables.scss';
   ul {
     margin: 0;
     padding: 0;
@@ -60,6 +60,7 @@
       margin-bottom: 10px;
       display: flex;
       box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+      align-items: center;
     }
     a {
       color: $text-color;
@@ -73,19 +74,22 @@
     & span {
       padding: 0 5px;
       font-size: 0.8em;
+      i {
+        color: $light-grey;
+      }
       cursor: pointer;
       text-decoration: underline;
     }
   }
   
-
-    .category {
+  .category {
     display: inline-block;
     padding: 5px 10px;
     margin-left: 10px;
     background-color: #eeeeee;
     font-size: 0.7em;
   }
+  
   .delete-icon {
     width: 25px;
     height: 25px;

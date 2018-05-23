@@ -9,10 +9,11 @@
         <div class="spacer"></div>
         <button @click="toggleBookmarkForm" class="btn-add">+</button>
       </div>
-      <add-bookmark :bookmarks="bookmarks" class="modal" v-if="isShowing" :toggleBookmarkForm="toggleBookmarkForm">
-        <h1 slot="title">Add a header</h1>
-        <button slot="action" type="submit">Add bookmark</button>
+      <add-bookmark :bookmarks="bookmarks" class="modal-container" v-if="isShowing" :toggleBookmarkForm="toggleBookmarkForm">
+        <h1 slot="title">Add a bookmark</h1>
+        <button slot="action" type="submit" class="btn-submit">Add bookmark</button>
       </add-bookmark>
+
       <bookmarks-list :bookmarks="bookmarks"></bookmarks-list>
     </div>
   </div>
@@ -69,6 +70,7 @@
 <style lang="scss">
   @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');
   @import './styles/_variables.scss';
+  @import './../node_modules/material-design-icons/iconfont/material-icons.css';
   html {
     box-sizing: border-box;
     font-size: 10px;
@@ -138,16 +140,40 @@
     color: #666;
     margin: 0;
   }
-  
+  .modal-container {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.4);
+  }
   .modal {
-    background: cyan;
+    background: white;
     color: black;
     padding: 20px;
-    width: 500px;
+    width: 600px;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    margin: 0;
     position: absolute;
+    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
   }
   
   .spacer {
     flex: 1;
+  }
+  
+  .btn-submit {
+    @include button-builder($red,
+    white);
+  }
+  
+  .btn-cancel {
+    @include button-builder(transparent,
+    grey);
   }
 </style>
