@@ -2,12 +2,12 @@
   <div id="app">
     <div class="container">
       <form @submit.prevent="validateForm">
-          <input type="text" placeholder="Site name" v-model.lazy="bookmark.name" name="name" v-validate="'required'">
-          <div class="error" v-if="errors.has('name')">{{errors.first('name')}}</div>
-          <input type="text" placeholder="URL" v-model.lazy="bookmark.url" name="url" v-validate="'required|url'">
-          <div class="error" v-if="errors.has('url')">{{errors.first('url')}}</div>
-          <input type="text" placeholder="Category" v-model="bookmark.category" name="category">
-          <button type="submit">Add bookmark</button>
+        <input type="text" placeholder="Site name" v-model.lazy="bookmark.name" name="name" v-validate="'required'">
+        <div class="error" v-if="errors.has('name')">{{errors.first('name')}}</div>
+        <input type="text" placeholder="URL" v-model.lazy="bookmark.url" name="url" v-validate="'required|url'">
+        <div class="error" v-if="errors.has('url')">{{errors.first('url')}}</div>
+        <input type="text" placeholder="Category" v-model="bookmark.category" name="category">
+        <button type="submit">Add bookmark</button>
       </form>
       <ul>
         <li v-for="(item, index) in bookmarks" :key='index'><a :href="item.url">{{item.name}}</a> <span class="category">{{item.category}}</span>
@@ -24,29 +24,16 @@
     name: "App",
     data() {
       return {
-        // bookmarks: [{
-        //     name: 'Codepen',
-        //     url: 'https://codepen.io/',
-        //     category: 'Front-end',
-        //   },
-        //   {
-        //     name: 'Dribbble',
-        //     url: 'https://dribbble.com/',
-        //     category: 'Web Design',
-        //   },
-        //   {
-        //     name: 'Udemy',
-        //     url: 'https://www.udemy.com/',
-        //     category: 'Education',
-        //   },
-        // ],
         bookmark: {
           name: '',
           url: '',
           category: '',
         },
-        bookmarks: []
+        bookmarks: [],
       }
+    },
+    created() {
+      this.getBookmarks();
     },
     methods: {
       addBookmark() {
@@ -55,22 +42,27 @@
           name: this.bookmark.name,
           url: this.bookmark.url,
           category: this.bookmark.category,
-          uid: uid,
         };
         // pushing the new bookmark to the bookmarks array
         this.bookmarks.push(newBookmark);
-        axios.put('data.json', newBookmark)
+        // sending to firebase
+        axios.post('bookmarks.json', newBookmark)
+        .catch(error => console.log(error))
         //clearing out input fields
         this.bookmark = {
-          name: null,
-          url: null,
-          category: null,
-          
+          name: '',
+          url: '',
+          category: '',
         };
       },
-      removeBookmark(index) {
-        this.bookmarks.splice(index, 1);
+      // deleting a bookmark
+      removeBookmark(result, index) {
+        // need to remove from firebase too
+        axios.delete('bookmarks.json', {params: {}})
+        .then(response => { this.bookmarks.splice(index, 1);})
+        .catch(error => console.log(error))
       },
+      // form validations
       validateForm() {
         this.$validator.validateAll().then(result => {
           if (result) {
@@ -78,10 +70,29 @@
           }
         });
       },
+      // getting bookmarks from firebase
+      getBookmarks() {
+        axios.get('bookmarks.json')
+          .then(response => {
+            if (response) {
+              console.log(response)
+              const data = response.data;
+              // const bookmarks = [];
+              // looping through the data of the response and storing each bookmark in a new array;
+              for (let key in data) {
+                const bookmark = data[key];
+                // storing th firebase id
+                bookmark.id = key; 
+                this.bookmarks.push(bookmark)
+              }
+              console.log(this.bookmarks)
+            }
+          })
+          .catch(error => console.log(error))
+      }
     },
-  //registering the validators for each input field
-
-
+  
+  
   }
 </script>
 
