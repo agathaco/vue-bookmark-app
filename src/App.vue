@@ -7,32 +7,29 @@
       <div class="container-header">
         <h2>Your bookmarks</h2>
         <div class="spacer"></div>
-        <button @click="toggleBookmarkForm" class="btn-add">+</button>
+        <button @click="openAddForm" class="btn-add">+</button>
       </div>
-      <add-bookmark :bookmarks="bookmarks" class="modal-container" v-if="isShowing" :toggleBookmarkForm="toggleBookmarkForm">
-        <h1 slot="title">Add a bookmark</h1>
-        <button slot="action" type="submit" class="btn-submit">Add bookmark</button>
-      </add-bookmark>
-
-      <bookmarks-list :bookmarks="bookmarks"></bookmarks-list>
+      <bookmark-form :bookmarks="bookmarks"  v-if="isShowing" :toggleAddForm="toggleAddForm" :selectedComponent="selectedComponent"></bookmark-form>
+      <bookmarks-list :bookmarks="bookmarks" :selectedComponent="selectedComponent" @changedcomponent="selectedComponent = $event"></bookmarks-list>
     </div>
   </div>
 </template>
 
 <script>
   import axios from 'axios';
-  import AddBookmark from './components/AddBookmark';
+  import BookmarkForm from './components/BookmarkForm';
   import BookmarksList from './components/BookmarksList';
   export default {
     name: "App",
     components: {
-      AddBookmark,
+      BookmarkForm,
       BookmarksList
     },
     data() {
       return {
         bookmarks: [],
         isShowing: false,
+        selectedComponent: 'addBookmark'
       }
     },
     created() {
@@ -46,7 +43,6 @@
             if (response) {
               console.log(response)
               const data = response.data;
-              // const bookmarks = [];
               // looping through the data of the response and storing each bookmark in a new array;
               for (let key in data) {
                 const bookmark = data[key];
@@ -54,14 +50,17 @@
                 bookmark.id = key;
                 this.bookmarks.push(bookmark)
               }
-              console.log(this.bookmarks)
             }
           })
           .catch(error => console.log(error))
       },
-      // show or hide bookmark form
-      toggleBookmarkForm() {
+      // showing or hiding new bookmark form
+      toggleAddForm() {
         this.isShowing = !this.isShowing;
+      },
+      openAddForm() {
+        this.selectedComponent= 'addBookmark';
+        this.toggleAddForm();
       }
     }
   }
@@ -140,28 +139,7 @@
     color: #666;
     margin: 0;
   }
-  .modal-container {
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    background: rgba(0, 0, 0, 0.4);
-  }
-  .modal {
-    background: white;
-    color: black;
-    padding: 20px;
-    width: 600px;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-    margin: 0;
-    position: absolute;
-    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
-  }
+
   
   .spacer {
     flex: 1;

@@ -3,46 +3,61 @@
     <ul>
       <li v-for="(item, index) in bookmarks" :key='index'><a :href="item.url">{{item.name}}</a> <span class="category" v-if="item.category !== ''">{{item.category}}</span>
         <div class="spacer"></div>
-        {{item}}
         <div class="actions">
-          <span @click="editBookmark()"><i class="material-icons">edit</i></span>
+          <span @click="openBookmarkForm(index)"><i class="material-icons">edit</i></span>
           <span @click="removeBookmark(item, index)"><i class="material-icons">delete</i></span>
-          
         </div>
       </li>
     </ul>
-    <add-bookmark :bookmarks="bookmarks" class="modal" v-if="isShowing">
-      <h1 slot="title">Edit a bookmark</h1>
-      <button slot="button" type="submit">Save bookmark</button>
-    </add-bookmark>
+    <bookmark-form :currentBookmark="currentBookmark" class="modal-container" v-if="isEditShowing" :selectedComponent="selectedComponent" :toggleEditForm='toggleEditForm'></bookmark-form>
   </div>
 </template>
 
 <script>
   import axios from 'axios';
-  import AddBookmark from './AddBookmark';
+  import BookmarkForm from './BookmarkForm';
   export default {
     components: {
-      AddBookmark
+      BookmarkForm
     },
-    name: 'BookmarksLst',
-    props: ['bookmarks'],
+    name: 'BookmarksList',
+    props: ['bookmarks', 'selectedComponent'],
     data() {
       return {
-        isShowing: false
+        isEditShowing: false,
+        editedComponent: this.selectedComponent, // to avoid directly mutating a prop
+        currentBookmark: {
+          name: '',
+          url: '',
+          category: '',
+        },
       }
     },
+    created() {
+      console.log(this.currentBookmark);
+    },
     methods: {
-      removeBookmark(result, index) {
-        // need to remove from firebase too
-        axios.delete('bookmarks/' + result.id + '.json')
+      removeBookmark(item, index) {
+        // removing from array and firebase
+        axios.delete('bookmarks/' + item.id + '.json')
           .then(response => {
             this.bookmarks.splice(index, 1);
           })
           .catch(error => console.log(error))
       },
-      editBookmark() {
-        this.isShowing = !this.isShowing;
+      openBookmarkForm(index) {
+        // showing the modal
+        this.toggleEditForm();
+        // changing dynaming component to 'Edit bookmark' and updating the global variable
+        this.editedComponent = 'editBookmark';
+        this.$emit('changedcomponent', this.editedComponent)
+        // Getting current item index
+        this.currentBookmark = this.bookmarks[index];
+        console.log(this.bookmarks[index]);
+        console.log(this.currentBookmark);
+      },
+      toggleEditForm() {
+        this.isEditShowing = !this.isEditShowing;
       }
     }
   }
