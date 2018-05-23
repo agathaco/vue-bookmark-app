@@ -2,7 +2,6 @@
   <div id="app">
     <div class="container">
       <form @submit.prevent="validateForm">
-
           <input type="text" placeholder="Site name" v-model.lazy="bookmark.name" name="name" v-validate="'required'">
           <div class="error" v-if="errors.has('name')">{{errors.first('name')}}</div>
           <input type="text" placeholder="URL" v-model.lazy="bookmark.url" name="url" v-validate="'required|url'">
@@ -20,7 +19,7 @@
 </template>
 
 <script>
-
+  import axios from 'axios';
   export default {
     name: "App",
     data() {
@@ -56,27 +55,30 @@
           name: this.bookmark.name,
           url: this.bookmark.url,
           category: this.bookmark.category,
+          uid: uid,
         };
         // pushing the new bookmark to the bookmarks array
         this.bookmarks.push(newBookmark);
+        axios.put('data.json', newBookmark)
         //clearing out input fields
         this.bookmark = {
           name: null,
           url: null,
           category: null,
+          
         };
       },
       removeBookmark(index) {
         this.bookmarks.splice(index, 1);
       },
       validateForm() {
-      this.$validator.validateAll().then(result => {
-        if (result) {
-          this.addBookmark()
-        }
-      });
-    }
-  },
+        this.$validator.validateAll().then(result => {
+          if (result) {
+            this.addBookmark()
+          }
+        });
+      },
+    },
   //registering the validators for each input field
 
 
