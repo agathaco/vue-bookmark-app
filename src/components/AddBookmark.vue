@@ -1,12 +1,14 @@
 <template>
   <div>
+    <slot name="title"></slot>
     <form @submit.prevent="validateForm">
       <input type="text" placeholder="Site name" v-model.lazy="bookmark.name" name="name" v-validate="'required'">
       <div class="error" v-if="errors.has('name')">{{errors.first('name')}}</div>
       <input type="text" placeholder="URL" v-model.lazy="bookmark.url" name="url" v-validate="'required|url'">
       <div class="error" v-if="errors.has('url')">{{errors.first('url')}}</div>
       <input type="text" placeholder="Category" v-model="bookmark.category" name="category">
-      <button type="submit">Add bookmark</button>
+      <slot name="action"></slot>
+      <button @click="toggleBookmarkForm()">Cancel</button>
     </form>
   </div>
 </template>
@@ -14,8 +16,9 @@
 <script>
   import axios from 'axios';
   export default {
+
     name: 'BookmarksLst',
-    props: ['bookmarks'],
+    props: ['bookmarks', 'toggleBookmarkForm'],
     data() {
       return {
         bookmark: {
@@ -57,16 +60,17 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="sass-loader" scoped>
+@import './../styles/_variables.scss';
   input,
   button {
-    width: calc(100% - 22px);
+    width: 100%;
     padding: 10px;
-    font-size: 1.3em;
   }
   
   button {
     width: 100%;
+    cursor:pointer;
   }
     
   .form-group--error input,

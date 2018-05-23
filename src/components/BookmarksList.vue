@@ -1,18 +1,33 @@
 <template>
+  <div>
     <ul>
-      <li v-for="(item, index) in bookmarks" :key='index'><a :href="item.url">{{item.name}}</a> <span class="category">{{item.category}}</span>
-        <div class="delete-icon" @click="removeBookmark(index)"></div>
+      <li v-for="(item, index) in bookmarks" :key='index'><a :href="item.url">{{item.name}}</a> <span class="category" v-if="item.category !== ''">{{item.category}}</span>
+        <div class="spacer"></div>
+        <div class="actions">
+          <span @click="editBookmark()">Edit</span>
+          <span @click="removeBookmark(index)">Delete</span>
+        </div>
       </li>
     </ul>
+    <add-bookmark :bookmarks="bookmarks" class="modal" v-if="isShowing">
+      <h1 slot="title">Edit the bookmark</h1>
+      <button slot="button" type="submit">Save bookmark</button>
+    </add-bookmark>
+  </div>
 </template>
 
 <script>
-import axios from 'axios';
+  import axios from 'axios';
+  import AddBookmark from './AddBookmark';
   export default {
+    components: {
+      AddBookmark
+    },
     name: 'BookmarksLst',
     props: ['bookmarks'],
     data() {
       return {
+        isShowing: false
       }
     },
     methods: {
@@ -26,12 +41,52 @@ import axios from 'axios';
           })
           .catch(error => console.log(error))
       },
+      editBookmark() {
+        this.isShowing = !this.isShowing;
+      }
     }
   }
 </script>
 
 <style lang="scss" scoped>
-    .delete-icon {
+@import './../styles/_variables.scss';
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    & li {
+      padding: 20px;
+      background-color: white;
+      margin-bottom: 10px;
+      display: flex;
+      box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+    }
+    a {
+      color: $text-color;
+      text-decoration: none;
+    }
+  }
+  
+  .actions {
+    display: flex;
+    align-self: strech;
+    & span {
+      padding: 0 5px;
+      font-size: 0.8em;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+  
+
+    .category {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-left: 10px;
+    background-color: #eeeeee;
+    font-size: 0.7em;
+  }
+  .delete-icon {
     width: 25px;
     height: 25px;
     border-radius: 100%;
@@ -49,5 +104,4 @@ import axios from 'axios';
       background-color: #E0EDF4;
     }
   }
-
 </style>
