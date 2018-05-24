@@ -156,4 +156,24 @@
     @include button-builder(transparent,
     grey);
   }
+    .tooltip {
+    display: block !important;
+    z-index: 10000;
+    font-size: 1.8rem;
+    left:4rem;
+    .tooltip-inner {
+      background:$text-color;
+      color: white;
+      border-radius: $radius;
+      padding: 5px 10px 4px;
+    }
+    .tooltip-arrow {
+      width: 0;
+      height: 0;
+      border-style: solid;
+      position: absolute;
+      margin: 5px;
+      border-color: $text-color;
+    }
+  }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul>
-      <li v-for="(item, index) in bookmarks" :key='index'><a :href="item.url">{{item.name}}</a> <span class="category" v-if="item.category !== ''">{{item.category}}</span>
+      <li v-for="(item, index) in bookmarks" :key='index'><a :href="item.url" v-tooltip="{content:item.url, delay: { show: 200, hide: 200}, placement: 'right', offset: 10}">{{item.name}}</a> <span class="category" v-if="item.category !== ''">{{item.category}}</span>
         <div class="spacer"></div>
         <div class="actions">
           <span @click="openBookmarkForm(index)"><i class="material-icons">edit</i></span>
@@ -22,7 +22,7 @@
     },
     name: 'BookmarksList',
     props: ['bookmarks', 'selectedComponent'],
-    data () {
+    data() {
       return {
         isEditShowing: false,
         editedComponent: this.selectedComponent, // to avoid directly mutating a prop
@@ -34,7 +34,7 @@
       }
     },
     methods: {
-      removeBookmark (item, index) {
+      removeBookmark(item, index) {
         // removing from array and firebase
         axios.delete('bookmarks/' + item.id + '.json')
           .then(response => {
@@ -42,7 +42,7 @@
           })
           .catch(error => console.log(error))
       },
-      openBookmarkForm (index) {
+      openBookmarkForm(index) {
         // showing the modal
         this.toggleEditForm()
         // changing dynaming component to 'Edit bookmark' and updating the global variable
@@ -51,7 +51,7 @@
         // Getting current item index
         this.currentBookmark = this.bookmarks[index]
       },
-      toggleEditForm () {
+      toggleEditForm() {
         this.isEditShowing = !this.isEditShowing
       }
     }
@@ -95,7 +95,7 @@
   .actions {
     display: flex;
     align-self: strech;
-    margin-top:0;
+    margin-top: 0;
     & span {
       padding: 0 5px;
       font-size: 0.8em;
@@ -114,4 +114,6 @@
     background-color: #eeeeee;
     font-size: 0.7em;
   }
+  
+
 </style>
