@@ -1,6 +1,7 @@
 # bookmark-app
 
-> A simple JavaScript bookmark manager built with Vue
+> A simple JavaScript bookmark manager built with Vue.js. You can add, edit, or delete any bookmarks form the list. To complete this project I have used Vue.js, Axios and Firebase, SCSS and a couple of external Vue libraries for UI purposes.
+
 
 ## Build Setup
 
