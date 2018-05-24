@@ -1,6 +1,6 @@
 # bookmark-app
 
-> A simple JavaScript bookmark manager that lets you add, edit, or delete any bookmark from the list. To complete this project I have used Vue.js, Axios and Firebase, SCSS and a couple of external Vue libraries for UI purposes.
+> A simple JavaScript bookmark manager that lets you add, edit, or delete any bookmark from the list. To complete this project I have used Vue.js, Firebase, SCSS and a couple of external Vue libraries for UI purposes.
 > I have not used a state management library for this project as is is simple enough to manage with props. However this would be the next step if more components were to be added.
 > I have added comments throughout the code to make my development process clearer, but this does not breakdown every functionality of Vue.js as it would make the code very cluttered and verbose. 
 
