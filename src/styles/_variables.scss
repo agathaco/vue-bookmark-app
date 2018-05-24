@@ -1,8 +1,10 @@
-$red: #fa5560;
+// $red: #fa5560;
 $background: #FAFAFA;
-$text-color: #272b2e;
-$medium-grey: #6B808C;
+$text-color: #616161;
 $light-grey: #BDC6CC;
+$red: #EB3349;
+$orange: #F45C43;
+$radius: 2px;
 @mixin btn-circle ($font-size, $color, $bgcolor) {
   color: $color;
   font-weight: 700;
@@ -44,7 +46,7 @@ $light-grey: #BDC6CC;
     line-height: 1;
     padding: 1em;
     border: 1px solid transparent;
-    border-radius: 1px;
+    border-radius: $radius;
     box-shadow: none;
     text-shadow: none;
     background-image: none;
@@ -54,18 +56,12 @@ $light-grey: #BDC6CC;
     display:inline-block;
     text-align: center;
     &:hover {
-      background:darken($bg,15%);
+      background:darken($bg,10%);
       transition: all 0.3s ease;
       color:$color;
     }
     &:active {
-      background:darken($bg,25%);
-      color:$color;
-    } 
-    &:not(.disabled):hover {
-      background:darken($bg,8%);
-      transition: all 0.3s ease;
-      background-image: none;
+      background:darken($bg,15%);
       color:$color;
     }
     &:focus {

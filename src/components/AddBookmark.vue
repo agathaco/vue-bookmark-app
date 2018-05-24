@@ -1,12 +1,14 @@
 <template>
   <div>
+    <div class="modal-header">
     <h1 class="title">Add a bookmark</h1>
+    </div>
     <form @submit.prevent="validateForm">
-      <input type="text" placeholder="Site name" v-model.lazy="bookmark.name" name="name" v-validate="'required'">
-      <div class="error" v-if="errors.has('name')">{{errors.first('name')}}</div>
-      <input type="text" placeholder="URL" v-model.lazy="bookmark.url" name="url" v-validate="'required|url'">
+      <input type="text" placeholder="Site name" v-model.lazy="bookmark.name" name="name" v-validate="'required'" :class="{'has-error': errors.has('name')}">
+      <div class="error" v-if="errors.has('name')" >{{errors.first('name')}}</div>
+      <input type="text" placeholder="URL" v-model.lazy="bookmark.url" name="url" v-validate="'required|url'" :class="{'has-error': errors.has('url')}">
       <div class="error" v-if="errors.has('url')">{{errors.first('url')}}</div>
-      <input type="text" placeholder="Category" v-model="bookmark.category" name="category">
+      <input type="text" placeholder="Category" v-model="bookmark.category" name="category" >
       <div class="actions">
         <button @click="toggleAddForm" class="btn-cancel">Cancel</button>
         <button type="submit" class="btn-submit">Add bookmark</button>

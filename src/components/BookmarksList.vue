@@ -70,22 +70,37 @@
     padding: 0;
     list-style-type: none;
     & li {
-      padding: 20px;
+      padding: 30px;
       background-color: white;
       margin-bottom: 10px;
       display: flex;
       box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
       align-items: center;
+      border-radius: $radius;
     }
     a {
       color: $text-color;
       text-decoration: none;
+      font-weight: 700;
+      &:hover {
+        transition: all 0.3s ease;
+        color: darken($text-color, 10%);
+      }
+      &:active {
+        color: darken($text-color, 10%);
+      }
+      &:focus {
+        border: none;
+        outline: 0;
+        color: $text-color;
+      }
     }
   }
   
   .actions {
     display: flex;
     align-self: strech;
+    margin-top:0;
     & span {
       padding: 0 5px;
       font-size: 0.8em;
@@ -103,24 +118,5 @@
     margin-left: 10px;
     background-color: #eeeeee;
     font-size: 0.7em;
-  }
-  
-  .delete-icon {
-    width: 25px;
-    height: 25px;
-    border-radius: 100%;
-    background: #323333;
-    float: right;
-    cursor: pointer;
-    position: relative;
-    &:after {
-      content: '';
-      position: absolute;
-      width: 50%;
-      height: 16%;
-      top: 42%;
-      left: 25%;
-      background-color: #E0EDF4;
-    }
   }
 </style>

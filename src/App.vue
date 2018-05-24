@@ -9,7 +9,7 @@
         <div class="spacer"></div>
         <button @click="openAddForm" class="btn-add">+</button>
       </div>
-      <bookmark-form :bookmarks="bookmarks"  v-if="isShowing" :toggleAddForm="toggleAddForm" :selectedComponent="selectedComponent"></bookmark-form>
+      <bookmark-form :bookmarks="bookmarks" v-if="isShowing" :toggleAddForm="toggleAddForm" :selectedComponent="selectedComponent"></bookmark-form>
       <bookmarks-list :bookmarks="bookmarks" :selectedComponent="selectedComponent" @changedcomponent="selectedComponent = $event"></bookmarks-list>
     </div>
   </div>
@@ -59,7 +59,7 @@
         this.isShowing = !this.isShowing;
       },
       openAddForm() {
-        this.selectedComponent= 'addBookmark';
+        this.selectedComponent = 'addBookmark';
         this.toggleAddForm();
       }
     }
@@ -88,7 +88,7 @@
   }
   
   .app {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     width: 100%;
     height: 100vh;
     background-color: $background;
@@ -104,11 +104,11 @@
       margin: 0 0 1.2rem 0;
       font-weight: 400;
       color: $red;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.1)
     }
   }
   
   .container {
-    background: #fff;
     font-family: Arial;
     max-width: 600px;
     margin: 0 auto;
@@ -117,13 +117,16 @@
   
   .container-header {
     color: white;
-    background-color: $red;
+    background: linear-gradient(to bottom right, $red 40%, $orange 100%);
     font-size: 1.8rem;
     padding: 40px;
     display: flex;
     align-items: center;
+    border-radius: $radius;
     h2 {
       margin: 0;
+      text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+      letter-spacing: 0.1rem;
     }
   }
   
@@ -139,7 +142,6 @@
     color: #666;
     margin: 0;
   }
-
   
   .spacer {
     flex: 1;
