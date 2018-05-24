@@ -4,6 +4,11 @@
 > I have not used a state management library for this project as is is simple enough to manage with props. However this would be the next step if more components were to be added.
 > I have added comments throughout the code to make my development process clearer, but this does not breakdown every functionality of Vue.js as it would make the code very cluttered and verbose. 
 
+> The next steps for this project would be:
+1. Implement Vuex for a better state management
+2. Improve UI with subtle animations
+3. Add functionalities, like better tagging and a filter
+
 
 ## Build Setup
 
