@@ -29,35 +29,6 @@
         },
       }
     },
-    methods: {
-      // addBookmark() {
-      //     // creating a new bookmark with the form's data
-      //     const newBookmark = {
-      //         name: this.bookmark.name,
-      //         url: this.bookmark.url,
-      //         category: this.bookmark.category,
-      //     };
-      //     // pushing the new bookmark to the bookmarks array
-      //     this.bookmarks.push(newBookmark);
-      //     // sending to firebase
-      //     axios.post('bookmarks.json', newBookmark)
-      //         .catch(error => console.log(error))
-      //     //clearing out input fields
-      //     this.bookmark = {
-      //         name: '',
-      //         url: '',
-      //         category: '',
-      //     };
-      // },
-      // form validations
-      // validateForm() {
-      //     this.$validator.validateAll().then(result => {
-      //         if (result) {
-      //             this.addBookmark()
-      //         }
-      //     });
-      // },
-    }
   }
 </script>
 

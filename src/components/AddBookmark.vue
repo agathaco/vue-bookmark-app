@@ -5,7 +5,7 @@
     </div>
     <form @submit.prevent="validateForm">
       <input type="text" placeholder="Site name" v-model.lazy="bookmark.name" name="name" v-validate="'required'" :class="{'has-error': errors.has('name')}">
-      <div class="error" v-if="errors.has('name')" >{{errors.first('name')}}</div>
+      <div class="error" v-if="errors.has('name')">{{errors.first('name')}}</div>
       <input type="text" placeholder="URL" v-model.lazy="bookmark.url" name="url" v-validate="'required|url'" :class="{'has-error': errors.has('url')}">
       <div class="error" v-if="errors.has('url')">{{errors.first('url')}}</div>
       <input type="text" placeholder="Category" v-model="bookmark.category" name="category" >
@@ -50,6 +50,7 @@
           url: '',
           category: '',
         };
+        // hiding the form again
         this.toggleAddForm();
       },
       // form validations
@@ -64,6 +65,4 @@
   }
 </script>
 
-<style lang="sass-loader" scoped>
-  
-</style>
+

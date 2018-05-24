@@ -33,9 +33,6 @@
         },
       }
     },
-    created() {
-      console.log(this.currentBookmark);
-    },
     methods: {
       removeBookmark(item, index) {
         // removing from array and firebase
