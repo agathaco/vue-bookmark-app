@@ -5,9 +5,9 @@
 > I have added comments throughout the code to make my development process clearer, but this does not breakdown every functionality of Vue.js as it would make the code very cluttered and verbose. 
 
 > The next steps for this project would be:
-1. Implement Vuex for a better state management
-2. Improve UI with subtle animations
-3. Add functionalities, like better tagging and a filter
+>1. Implement Vuex for a better state management
+>2. Improve UI with subtle animations
+>3. Add functionalities, like better tagging and a filter
 
 
 ## Build Setup
