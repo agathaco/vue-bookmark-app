@@ -19,7 +19,7 @@
     },
     name: 'BookmarksForm',
     props: ['bookmarks', 'toggleAddForm', 'selectedComponent', 'toggleEditForm', 'currentBookmark'],
-    data () {
+    data() {
       return {
         bookmark: {
           name: '',
@@ -41,8 +41,9 @@
     margin-bottom: 1rem;
     font-size: 1.2rem;
     border-radius: $radius;
-  };
+  }
   
+  ;
   .actions {
     margin-top: 2rem;
     display: flex;
@@ -56,7 +57,7 @@
   .has-error,
   .has-error:focus,
   .has-error:hover {
-    border-color:$red;
+    border-color: $red;
   }
   
   .error {
@@ -100,8 +101,11 @@
         margin: 0.5rem 0 0.5rem 0;
         color: $text-color;
         display: block;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.1)
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1)
       }
+    }
+    @include bp-md {
+      width: 90%;
     }
   }
   
@@ -112,5 +116,4 @@
   .modal-leave-active {
     opacity: 0;
   }
-  
 </style>

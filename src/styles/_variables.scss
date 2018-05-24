@@ -78,3 +78,32 @@ $radius: 2px;
       text-decoration: none !important;
     }
   }
+// media queries breakpoints
+  @mixin bp-xl {
+    @media only screen and (min-width: 1200px) {
+      @content;
+    }
+  } 
+  
+  @mixin bp-lg {
+    @media only screen and (max-width: 1199px) {
+      @content;
+    }
+  }
+  
+  @mixin bp-md {
+    @media only screen and (max-width: 679px) {
+      @content;
+    }
+  }
+  
+  @mixin bp-sm {
+    @media only screen and (max-width: 599px) {
+      @content;
+    }
+  }
+  @mixin bp-xs {
+    @media only screen and (max-width: 379px) {
+      @content;
+    }
+  }
