@@ -18,49 +18,49 @@
 </template>
 
 <script>
-  import axios from 'axios';
+  import axios from 'axios'
   export default {
     name: 'AddBookmark',
     props: ['bookmarks', 'toggleAddForm', 'selectedComponent'],
-    data() {
+    data () {
       return {
         bookmark: {
           name: '',
           url: '',
-          category: '',
-        },
+          category: ''
+        }
       }
     },
     methods: {
-      addBookmark() {
+      addBookmark () {
         // creating a new bookmark with the form's data
         const newBookmark = {
           name: this.bookmark.name,
           url: this.bookmark.url,
-          category: this.bookmark.category,
-        };
+          category: this.bookmark.category
+        }
         // pushing the new bookmark to the bookmarks array
-        this.bookmarks.push(newBookmark);
+        this.bookmarks.push(newBookmark)
         // sending to firebase
         axios.post('bookmarks.json', newBookmark)
           .catch(error => console.log(error))
-        //clearing out input fields
+        // clearing out input fields
         this.bookmark = {
           name: '',
           url: '',
-          category: '',
-        };
+          category: ''
+        }
         // hiding the form again
-        this.toggleAddForm();
+        this.toggleAddForm()
       },
       // form validations
-      validateForm() {
+      validateForm () {
         this.$validator.validateAll().then(result => {
           if (result) {
             this.addBookmark()
           }
-        });
-      },
+        })
+      }
     }
   }
 </script>

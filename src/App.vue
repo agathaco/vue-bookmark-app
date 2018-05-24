@@ -16,38 +16,38 @@
 </template>
 
 <script>
-  import axios from 'axios';
-  import BookmarkForm from './components/BookmarkForm';
-  import BookmarksList from './components/BookmarksList';
+  import axios from 'axios'
+  import BookmarkForm from './components/BookmarkForm'
+  import BookmarksList from './components/BookmarksList'
   export default {
-    name: "App",
+    name: 'App',
     components: {
       BookmarkForm,
       BookmarksList
     },
-    data() {
+    data () {
       return {
         bookmarks: [],
         isShowing: false,
         selectedComponent: 'addBookmark'
       }
     },
-    created() {
-      this.getBookmarks();
+    created () {
+      this.getBookmarks()
     },
     methods: {
       // getting bookmarks from firebase
-      getBookmarks() {
+      getBookmarks () {
         axios.get('bookmarks.json')
           .then(response => {
             if (response) {
               console.log(response)
-              const data = response.data;
+              const data = response.data
               // looping through the data of the response and storing each bookmark in a new array;
               for (let key in data) {
-                const bookmark = data[key];
+                const bookmark = data[key]
                 // storing th firebase id
-                bookmark.id = key;
+                bookmark.id = key
                 this.bookmarks.push(bookmark)
               }
             }
@@ -55,12 +55,12 @@
           .catch(error => console.log(error))
       },
       // showing or hiding new bookmark form
-      toggleAddForm() {
-        this.isShowing = !this.isShowing;
+      toggleAddForm () {
+        this.isShowing = !this.isShowing
       },
-      openAddForm() {
-        this.selectedComponent = 'addBookmark';
-        this.toggleAddForm();
+      openAddForm () {
+        this.selectedComponent = 'addBookmark'
+        this.toggleAddForm()
       }
     }
   }

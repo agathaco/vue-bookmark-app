@@ -14,47 +14,45 @@
 </template>
 
 <script>
-  import axios from 'axios';
-  import BookmarkForm from './BookmarkForm';
+  import axios from 'axios'
+  import BookmarkForm from './BookmarkForm'
   export default {
     components: {
       BookmarkForm
     },
     name: 'BookmarksList',
     props: ['bookmarks', 'selectedComponent'],
-    data() {
+    data () {
       return {
         isEditShowing: false,
         editedComponent: this.selectedComponent, // to avoid directly mutating a prop
         currentBookmark: {
           name: '',
           url: '',
-          category: '',
-        },
+          category: ''
+        }
       }
     },
     methods: {
-      removeBookmark(item, index) {
+      removeBookmark (item, index) {
         // removing from array and firebase
         axios.delete('bookmarks/' + item.id + '.json')
           .then(response => {
-            this.bookmarks.splice(index, 1);
+            this.bookmarks.splice(index, 1)
           })
           .catch(error => console.log(error))
       },
-      openBookmarkForm(index) {
+      openBookmarkForm (index) {
         // showing the modal
-        this.toggleEditForm();
+        this.toggleEditForm()
         // changing dynaming component to 'Edit bookmark' and updating the global variable
-        this.editedComponent = 'editBookmark';
+        this.editedComponent = 'editBookmark'
         this.$emit('changedcomponent', this.editedComponent)
         // Getting current item index
-        this.currentBookmark = this.bookmarks[index];
-        console.log(this.bookmarks[index]);
-        console.log(this.currentBookmark);
+        this.currentBookmark = this.bookmarks[index]
       },
-      toggleEditForm() {
-        this.isEditShowing = !this.isEditShowing;
+      toggleEditForm () {
+        this.isEditShowing = !this.isEditShowing
       }
     }
   }

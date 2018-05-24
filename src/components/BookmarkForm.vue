@@ -10,9 +10,8 @@
 </template>
 
 <script>
-  import axios from 'axios';
-  import AddBookmark from './AddBookmark';
-  import EditBookmark from './EditBookmark';
+  import AddBookmark from './AddBookmark'
+  import EditBookmark from './EditBookmark'
   export default {
     components: {
       AddBookmark,
@@ -20,15 +19,15 @@
     },
     name: 'BookmarksForm',
     props: ['bookmarks', 'toggleAddForm', 'selectedComponent', 'toggleEditForm', 'currentBookmark'],
-    data() {
+    data () {
       return {
         bookmark: {
           name: '',
           url: '',
-          category: '',
-        },
+          category: ''
+        }
       }
-    },
+    }
   }
 </script>
 
@@ -37,7 +36,7 @@
   input {
     width: 100%;
     padding: 15px;
-    border: 1px solid #BDC6CC;
+    border: 1px solid $light-grey;
     outline: 0;
     margin-bottom: 1rem;
     font-size: 1.2rem;

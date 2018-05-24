@@ -18,48 +18,45 @@
 </template>
 
 <script>
-  import axios from "axios";
+  import axios from 'axios'
   export default {
-    name: "EditBookmark",
+    name: 'EditBookmark',
     props: [
-      "currentBookmark",
-      "toggleBookmarkForm",
-      "selectedComponent",
-      "toggleEditForm"
+      'currentBookmark',
+      'toggleBookmarkForm',
+      'selectedComponent',
+      'toggleEditForm'
     ],
-    data() {
+    data () {
       return {
         bookmark: {
-          name: "",
-          url: "",
-          category: ""
+          name: '',
+          url: '',
+          category: ''
         }
-      };
-    },
-    created() {
-      console.log(this.currentBookmark);
+      }
     },
     methods: {
-      editBookmark() {
-        console.log("edited");
-        this.toggleEditForm();
+      editBookmark () {
+        console.log('edited')
+        this.toggleEditForm()
         // posting the changes to firebase
         axios
           .put(
-            "bookmarks/" + this.currentBookmark.id + ".json",
+            'bookmarks/' + this.currentBookmark.id + '.json',
             this.currentBookmark
           )
-          .catch(error => console.log(error));
+          .catch(error => console.log(error))
       },
       // form validations
-      validateForm() {
+      validateForm () {
         this.$validator.validateAll().then(result => {
           if (result) {
-            this.editBookmark();
+            this.editBookmark()
           }
-        });
+        })
       }
     }
-  };
+  }
 </script>
 
