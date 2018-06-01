@@ -16,7 +16,8 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  // comment out if getting bookmarks from firebase
+  // import axios from 'axios'
   import BookmarkForm from './components/BookmarkForm'
   import BookmarksList from './components/BookmarksList'
   export default {
@@ -27,33 +28,37 @@
     },
     data () {
       return {
-        bookmarks: [],
         isShowing: false,
-        selectedComponent: 'addBookmark'
+        selectedComponent: 'addBookmark',
+        bookmarks: JSON.parse(localStorage.getItem('bookmarks')) || [],
       }
     },
-    created () {
-      this.getBookmarks()
-    },
+    // comment out if getting bookmarks from firebase
+    // created () {
+    //   this.getBookmarks()
+    // },
     methods: {
-      // getting bookmarks from firebase
-      getBookmarks () {
-        axios.get('bookmarks.json')
-          .then(response => {
-            if (response) {
-              console.log(response)
-              const data = response.data
-              // looping through the data of the response and storing each bookmark in a new array;
-              for (let key in data) {
-                const bookmark = data[key]
-                // storing th firebase id
-                bookmark.id = key
-                this.bookmarks.push(bookmark)
-              }
-            }
-          })
-          .catch(error => console.log(error))
-      },
+      // comment out if getting bookmarks from firebase
+      // getBookmarks () {
+        // axios.get('bookmarks.json')
+        //   .then(response => {
+        //     if (response) {
+        //       console.log(response)
+        //       const data = response.data
+        //       // looping through the data of the response and storing each bookmark in a new array;
+        //       for (let key in data) {
+        //         const bookmark = data[key]
+        //         // storing th firebase id
+        //         bookmark.id = key
+        //         this.bookmarks.push(bookmark)
+        //       }
+        //     }
+        //   })
+        //   .catch(error => console.log(error))
+
+        // local storage
+        // const items = JSON.parse(localStorage.getItem('items')) || [];
+      // },
       // showing or hiding new bookmark form
       toggleAddForm () {
         this.isShowing = !this.isShowing

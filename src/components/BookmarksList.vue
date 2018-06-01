@@ -9,7 +9,7 @@
         </div>
       </li>
     </ul>
-    <bookmark-form :currentBookmark="currentBookmark" class="modal-container" v-if="isEditShowing" :selectedComponent="selectedComponent" :toggleEditForm='toggleEditForm'></bookmark-form>
+    <bookmark-form :currentBookmark="currentBookmark" class="modal-container" v-if="isEditShowing" :selectedComponent="selectedComponent" :toggleEditForm='toggleEditForm' :bookmarks='bookmarks'></bookmark-form>
   </div>
 </template>
 

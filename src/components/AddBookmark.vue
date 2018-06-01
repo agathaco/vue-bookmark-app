@@ -18,7 +18,8 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  // comment out if saving bookmarks to firebase
+  // import axios from 'axios'
   export default {
     name: 'AddBookmark',
     props: ['bookmarks', 'toggleAddForm', 'selectedComponent'],
@@ -41,9 +42,15 @@
         }
         // pushing the new bookmark to the bookmarks array
         this.bookmarks.push(newBookmark)
-        // sending to firebase
-        axios.post('bookmarks.json', newBookmark)
-          .catch(error => console.log(error))
+
+        // comment out if saving bookmarks to firebase
+        // axios.post('bookmarks.json', newBookmark)
+        //   .catch(error => console.log(error))
+
+        // saving bookmarks with local storage
+        localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks));
+
+          
         // clearing out input fields
         this.bookmark = {
           name: '',

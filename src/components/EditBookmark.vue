@@ -24,7 +24,8 @@
       'currentBookmark',
       'toggleBookmarkForm',
       'selectedComponent',
-      'toggleEditForm'
+      'toggleEditForm',
+      'bookmarks'
     ],
     data () {
       return {
@@ -38,13 +39,16 @@
     methods: {
       editBookmark () {
         this.toggleEditForm()
-        // posting the changes to firebase
-        axios
-          .put(
-            'bookmarks/' + this.currentBookmark.id + '.json',
-            this.currentBookmark
-          )
-          .catch(error => console.log(error))
+        // comment out if saving bookmarks to firebase
+        // axios
+        //   .put(
+        //     'bookmarks/' + this.currentBookmark.id + '.json',
+        //     this.currentBookmark
+        //   )
+        //   .catch(error => console.log(error))
+
+        // saving bookmarks with local storage
+        localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks));
       },
       // form validations
       validateForm () {
