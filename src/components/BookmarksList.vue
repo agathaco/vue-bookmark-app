@@ -35,12 +35,18 @@
     },
     methods: {
       removeBookmark(item, index) {
-        // removing from array and firebase
-        axios.delete('bookmarks/' + item.id + '.json')
-          .then(response => {
-            this.bookmarks.splice(index, 1)
-          })
-          .catch(error => console.log(error))
+
+        // comment out if using firebase
+        // axios.delete('bookmarks/' + item.id + '.json')
+        //   .then(response => {
+        //     this.bookmarks.splice(index, 1)
+        //   })
+        //   .catch(error => console.log(error))
+
+        // removing the selected bookmark from the array, re parsing the modified array and saving it again
+        this.bookmarks.splice(index, 1)
+        localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks));
+   
       },
       openBookmarkForm(index) {
         // showing the modal
